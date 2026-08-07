@@ -1,0 +1,3 @@
+stewart_v2.ino is a validation and debugging sketch that computes the required angles for all six servos based on the desired platform pose and prints the calculated angles to the Serial Monitor. It does not generate PWM signals or physically control the servo motors. The sketch is intended solely to verify the inverse kinematics calculations before integrating the servo control logic.
+
+The accompanying .c and .h files were automatically generated using MATLAB Coder from the MATLAB implementation of the inverse kinematics algorithm. These files contain the generated C code and can be integrated into embedded applications running on microcontrollers such as the Arduino or Teensy 4.1.
