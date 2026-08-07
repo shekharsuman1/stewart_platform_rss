@@ -1,0 +1,20 @@
+The final implementation of the Stewart platform controller is contained in **`src/servo_run.ino`**. This sketch integrates the inverse kinematics, trajectory planning, and servo control algorithms required to generate coordinated motion of the six actuators. The user specifies the desired pose of the moving platform in terms of three translational displacements (**dx, dy, dz**) and three rotational angles (**yaw, pitch, roll**). Based on these six degrees of freedom, the inverse kinematics algorithm computes the corresponding target angles for each of the six servo motors.
+
+After determining the target servo angles, the program calculates the angular displacement required for each servo by comparing its current position with the desired final position. Since the angular displacement is generally different for each actuator, commanding all servos to move directly to their final positions would result in unsynchronized motion, causing some servos to reach their targets earlier than others. Such behaviour can introduce undesirable loading on the linkage mechanism and produce non-smooth platform motion.
+
+To overcome this, the sketch implements a synchronized trajectory generation algorithm. The total motion is divided into a number of intermediate steps, and the motion duration is determined such that all six servos complete their movements simultaneously. The servo requiring the largest angular displacement dictates the total movement time, while the trajectories of the remaining servos are proportionally scaled so that every actuator starts and finishes its motion at exactly the same instant. This coordinated approach ensures that the Stewart platform follows the desired trajectory smoothly while maintaining the geometric constraints of the mechanism.
+
+Rather than commanding the servos to move at a constant speed, the trajectory is generated using a smooth polynomial motion profile. The coefficients of the polynomial are chosen to satisfy the following boundary conditions:
+
+* The initial position equals the current servo angle.
+* The final position equals the computed target angle.
+* The initial velocity is zero.
+* The final velocity is zero.
+* The initial acceleration is zero.
+* The final acceleration is zero.
+
+These boundary conditions result in a smooth trajectory with continuous position, velocity, and acceleration throughout the motion. Consequently, the servos accelerate gradually from rest, attain their required intermediate velocities, and decelerate smoothly to rest at the target position. This eliminates abrupt changes in velocity and acceleration, reducing mechanical shock, vibration, and dynamic loading on both the servos and the Stewart platform structure. Such motion planning also improves tracking accuracy and contributes to longer actuator life.
+
+During execution, the controller continuously evaluates the trajectory equations at fixed sampling intervals. At each time step, the desired angle for every servo is computed and transmitted to the servo controller. Since all actuators are updated simultaneously, the moving platform follows the commanded six-degree-of-freedom motion in a coordinated and stable manner.
+
+The implementation was thoroughly verified through simulation using **Wokwi integrated with Visual Studio Code**. The complete firmware was executed on a virtual **ESP32-S3** development board together with a simulated **PCA9685 16-channel PWM servo driver** and six virtual servo motors. The simulation was used to validate the inverse kinematics calculations, trajectory generation algorithm, synchronized motion planning, and servo control logic under various combinations of translational and rotational commands. The resulting servo motions were observed to be smooth and synchronized, with all actuators reaching their respective target angles simultaneously while satisfying the prescribed zero-velocity and zero-acceleration boundary conditions. This simulation-based verification provided confidence in the correctness of the implementation before deployment on the physical Stewart platform hardware.
