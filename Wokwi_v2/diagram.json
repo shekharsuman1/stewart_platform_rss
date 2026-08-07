@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-s3-devkitc-1",
+      "id": "esp",
+      "top": -201.78,
+      "left": 254.17,
+      "attrs": {}
+    },
+    { "type": "chip-pca9685", "id": "chip1", "top": 49.02, "left": 52.8, "attrs": {} },
+    {
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": -166,
+      "left": -506,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo2",
+      "top": -89.2,
+      "left": -314,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo3",
+      "top": -12.4,
+      "left": -515.6,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo4",
+      "top": 54.8,
+      "left": -314,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo5",
+      "top": 150.8,
+      "left": -515.6,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo6",
+      "top": 218,
+      "left": -314,
+      "rotate": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -147.4,
+      "left": 480,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "joystick1",
+      "top": -432.6,
+      "left": -4.2,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "joystick2",
+      "top": -432.6,
+      "left": 149.4,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "joystick3",
+      "top": -432.6,
+      "left": 293.4,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:GND.1", "servo1:GND", "black", [ "h-48.05", "v-144" ] ],
+    [ "servo3:GND", "servo2:GND", "black", [ "h0" ] ],
+    [ "servo2:GND", "servo1:GND", "black", [ "h28.8", "v-48", "h-220.8" ] ],
+    [ "servo4:GND", "servo3:GND", "black", [ "h38.4", "v-67.2", "h-38.4" ] ],
+    [ "servo5:GND", "servo4:GND", "black", [ "h201.6", "v-19.2" ] ],
+    [ "servo6:GND", "servo5:GND", "black", [ "h19.2", "v-67.2", "h-220.8" ] ],
+    [ "servo1:V+", "esp:5V", "green", [ "h528", "v86.3" ] ],
+    [ "servo2:V+", "servo1:V+", "green", [ "v-48.1", "h-192" ] ],
+    [ "servo3:V+", "servo2:V+", "green", [ "h240", "v-19.3" ] ],
+    [ "servo4:V+", "servo2:V+", "green", [ "h86.4", "v-48.1" ] ],
+    [ "servo5:V+", "servo4:V+", "green", [ "h288", "v-57.7" ] ],
+    [ "servo6:V+", "servo4:V+", "green", [ "h86.4", "v-19.3" ] ],
+    [ "servo2:PWM", "chip1:LED1", "green", [ "h182.4", "v124.6" ] ],
+    [ "servo3:PWM", "chip1:LED2", "green", [ "h336", "v-0.2" ] ],
+    [ "servo4:PWM", "chip1:LED3", "green", [ "h144", "v28.6" ] ],
+    [ "servo5:PWM", "chip1:LED4", "green", [ "h355.2", "v-0.2" ] ],
+    [ "servo6:PWM", "chip1:LED5", "green", [ "h172.8", "v-29" ] ],
+    [ "servo1:PWM", "chip1:LED0", "green", [ "h336", "v47.8" ] ],
+    [ "esp:8", "chip1:SDA", "green", [ "h-28.85", "v153.6" ] ],
+    [ "esp:9", "chip1:SCL", "green", [ "h-19.25", "v144" ] ],
+    [ "esp:3V3.1", "chip1:VDD", "green", [ "h-38.45", "v240" ] ],
+    [ "chip1:VSS", "esp:GND.2", "green", [ "v38.4", "h307.2", "v-393.6" ] ],
+    [ "chip1:VDD", "esp:3V3", "green", [ "h0" ] ],
+    [ "esp:22", "chip1:SCL", "green", [ "h19.47", "v220.98" ] ],
+    [ "esp:GND.8", "btn1:1.l", "black", [ "h67.17", "v9.48" ] ],
+    [ "joystick1:VCC", "esp:3V3.1", "red", [ "v105.6", "h190.75" ] ],
+    [ "joystick1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "joystick2:VCC", "esp:3V3.1", "red", [ "v0" ] ],
+    [ "joystick2:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "joystick3:VCC", "esp:3V3.1", "red", [ "v57.6", "h-124.8", "v48" ] ],
+    [ "joystick3:GND", "esp:GND.8", "black", [ "v0" ] ],
+    [ "btn1:2.l", "esp:7", "green", [ "h-19.2", "v-19" ] ],
+    [ "joystick3:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "btn1:1.l", "esp:GND.2", "green", [ "h-67.2", "v-38.4" ] ],
+    [ "joystick1:VERT", "esp:4", "green", [ "v0" ] ],
+    [ "joystick1:HORZ", "esp:5", "green", [ "v0" ] ],
+    [ "joystick2:VERT", "esp:15", "green", [ "v0" ] ],
+    [ "joystick2:HORZ", "esp:16", "green", [ "v0" ] ],
+    [ "joystick3:VERT", "esp:17", "green", [ "v0" ] ],
+    [ "joystick3:HORZ", "esp:18", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
